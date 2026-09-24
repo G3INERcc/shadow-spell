@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Soul core</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <section>
+            <a th:href="@{/memorys/create}">Agregar memoria</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th> 
+                        <th>Foto</th> 
+                        <th>Nombre</th> 
+                        <th>ID</th> 
+                        <th>Rango</th> 
+                        <th>Descripcion</th> 
+                        <th>Acciones</th> 
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="mem, item: ${memorys}">
+                        <td th:text="${item.count}"></td>
+                        <td>
+                            <img th:if="${mem.photo != null and !#strings.isEmpty(mem.photo)}" 
+                                 th:src="@{'/' + ${mem.photo}}" 
+                                 alt="Foto de la memoria" 
+                                 style="width: 40px; height: 40px; object-fit: cover;" />
+                        </td>
+                        <td th:text="${mem.name}"></td>
+                        <td th:text="${mem.id}"></td>
+                        <td th:text="${mem.rank}"></td>
+                        <td th:text="${mem.description}"></td>
+                        <td>
+                            <a th:href="@{/memorys/delete(memId=${mem.id})}" 
+                               onclick="return confirm('Desea destruir esta memoria?')">Eliminar</a>
+
+                            <a th:href="@{/edit(memoryId=${mem.id})}">Editar</a>
+
+                            <button type="button" th:onclick="|getDetailById(${mem.id})|" >Ver detalles</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+    </body>
+</html>
