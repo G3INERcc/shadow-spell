@@ -3,15 +3,39 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html xmlns:th="http://www.thymeleaf.org">
-    <head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+    <head> 
         <title>Soul core</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
     </head>
     <body>
 
         <section>
+
+            <!-- Modal -->
+            <div class="modal fade" id="memoryDetailModal"  tabindex="-1"  aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="memoryTitle">Shadow spell</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="memoryDetail">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary">Noshe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <a th:href="@{/memorys/create}">Agregar memoria</a>
             <table>
                 <thead>
@@ -43,13 +67,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <a th:href="@{/memorys/delete(memId=${mem.id})}" 
                                onclick="return confirm('Desea destruir esta memoria?')">Eliminar</a>
 
-                            <a th:href="@{/edit(memoryId=${mem.id})}">Editar</a>
+                            <a th:href="@{/memorys/edit(memoryId=${mem.id})}">Editar</a>
 
                             <button type="button" th:onclick="|getDetailById(${mem.id})|" >Ver detalles</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+
+
+            <script>
+
+                function getDetailById(id) {
+                    let url = "/memorys/findById?memId=" + id;
+
+                    $.ajax({
+                        url:url,
+                        type: 'GET',
+                        cache:false
+
+                    }).done(function (response) {
+                        $('#memoryTitle').text(response.name);
+
+                        let memoryStats = `
+                            <strong>Id:</strong>${response.id}<br>
+                            <strong>Nombre:</strong>${response.name}<br>
+                            <strong>Rango:</strong>${response.rank}<br>
+                            <strong>Descripcion:</strong>${response.description}<br>
+                        `;
+                        
+                        $('#memoryDetail').html(memoryStats);
+                        
+                        let modal = new bootstrap.Modal(document.getElementById('memoryDetailModal'));
+                        modal.show();
+                        
+                    }).fail(function(error){
+                        console.error("Error al obtener producto", error);
+                    });
+                }
+
+            </script>
 
         </section>
     </body>

@@ -52,6 +52,21 @@ public class MemoryController {
         return "memorys/create";
     }
 
+    @GetMapping("/findById")
+    public Memory findById(@RequestParam int memId){
+        return service.getById(memId);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @PostMapping("/save")
     public String save( Memory memory, @RequestParam(value = "memPhoto", required = false) MultipartFile memPhoto, Model model) {
         try {
