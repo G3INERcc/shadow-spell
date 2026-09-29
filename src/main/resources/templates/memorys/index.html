@@ -5,7 +5,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 -->
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+      layout:decorate="~{layout/admin}"
+      >
     <head> 
         <title>Soul core</title>
         <meta charset="UTF-8">
@@ -15,26 +16,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
 
-        <section>
+        <section layout:fragment="content">
 
-            <!-- Modal -->
-            <div class="modal fade" id="memoryDetailModal"  tabindex="-1"  aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="memoryTitle">Shadow spell</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body" id="memoryDetail">
-                            
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Noshe</button>
-                        </div>
-                    </div>
-                </div>
+<!-- Modal -->
+<div class="modal fade text-dark" id="memoryDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="memoryTitle">Shadow spell</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body" id="memoryDetail">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Noshe</button>
+            </div>
+        </div>
+    </div>
+</div>
 
             <a th:href="@{/memorys/create}">Agregar memoria</a>
             <table>
@@ -69,7 +70,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                             <a th:href="@{/memorys/edit(memoryId=${mem.id})}">Editar</a>
 
-                            <button type="button" th:onclick="|getDetailById(${mem.id})|" >Ver detalles</button>
+                            <button type="button" th:onclick="|getDetailById(${mem.id})|" class="btn btn-outline-info">Ver detalles</button>
                         </td>
                     </tr>
                 </tbody>
@@ -105,9 +106,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         console.error("Error al obtener producto", error);
                     });
                 }
-
             </script>
-
         </section>
     </body>
 </html>
